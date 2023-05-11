@@ -1,32 +1,21 @@
-import styles from './styles';
-import { Billing, Business, CardDeal, Clients, CTA, Footer, Navbar, Stats, Testimonials, Hero } from "./components";
+import { Billing, Business, CardDeal, Clients, CTA, Footer, Navbar, Stats, Testimonials, Hero, Login } from "./components";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './page/HomePage';
+import LoginPage from "./page/LoginPage";
 
 const App = () => {
   return (
-    <div className='bg-primary w-full overflow-hidden'>
-      <div className={`${styles.paddingX} flex ${styles.flexCenter}`}>
-        <div className={`w-full`}>
-          <Navbar />
-        </div>
-      </div>
-      <div className={`bg-primary ${styles.flexStart}`}>
-        <div className={`${styles.boxWidth}`}>
-          <Hero />
-        </div>
-      </div>
+    <div>
+      <Routes>
+        <Route path='login' element={<LoginPage />} />
+        <Route exact path='/' element={<HomePage />}>
 
-      <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
-        <div className={`${styles.boxWidth}`}>
-          <Stats />
-          <Business />
-          <Billing />
-          <CardDeal />
-          <Testimonials />
-          <Clients />
-          <CTA />
-          <Footer />
-        </div>
-      </div>
+          {/* <Route index element={<Home />} />
+          <Route path='about' element={<About />} />
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='*' element={<NoMatch />} /> */}
+        </Route>
+      </Routes>
     </div>
   )
 }
