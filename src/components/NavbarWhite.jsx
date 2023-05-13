@@ -5,20 +5,20 @@ import { Link, useLocation } from "react-router-dom";
 import '../index.css'
 
 
-const Navbar = () => {
+const NavbarWhite = () => {
   const [toggle, setToggle] = useState(false)
   const currentLocation = useLocation();
 
   return (
     <nav className="w-full flex pt-3 pb-3 justify-between items-center navbar">
       <Link to="/">
-        <img src={designThinkingLogo} alt="ncu design thinking" className="filter-white w-[150px]" />
+        <img src={designThinkingLogo} alt="ncu design thinking" className="w-[150px]" />
       </Link>
-      <ul className="list-none flex  justify-end items-center flex-1">
+      <ul className="list-none flex justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
-            className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 cursor-pointer text-[14px] text-white ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
+            className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 cursor-pointer text-[14px] text-black ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
           >
             <Link to="/login">{nav.title}</Link>
           </li>
@@ -50,4 +50,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default NavbarWhite

@@ -25,6 +25,10 @@ import people02 from "./people02.png";
 import people03 from "./people03.png";
 import designThinkingLogo from "./designThinkingLogo.svg"
 import idea from "./idea.jpg"
+import mushroom from "./mushroom.gif"
+import beginner from "./beginner.gif"
+import userIcon from "./user.png"
+import keyIcon from "./key.png"
 
 export {
   airbnb,
@@ -53,5 +57,9 @@ export {
   people02,
   people03,
   designThinkingLogo,
-  idea
+  idea,
+  mushroom,
+  beginner,
+  userIcon,
+  keyIcon
 };

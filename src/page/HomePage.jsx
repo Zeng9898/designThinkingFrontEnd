@@ -1,32 +1,19 @@
 import styles from '../styles';
-import { Billing, Business, CardDeal, Clients, CTA, Footer, Navbar, Stats, Testimonials, Hero } from "../components";
+import { Navbar, Slogan } from "../components";
 
 const HomePage = () => {
   return (
-    <div className=' bg-primary w-full overflow-hidden h-screen'>
+    <div className='bg-gradient-to-r from-blue-400 to-blue-500 overflow-hidden h-screen'>
       <div className={`${styles.paddingX} flex ${styles.flexCenter}`}>
         <div className={`w-full`}>
           <Navbar />
         </div>
       </div>
-      <div className={`bg-primary ${styles.flexCenter} `}>
+      <div className={`${styles.flexCenter} `}>
         <div className={`${styles.boxWidth}`}>
-          <Hero />
+          <Slogan />
         </div>
       </div>
-
-      {/* <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
-        <div className={`${styles.boxWidth}`}>
-          <Stats />
-          <Business />
-          <Billing />
-          <CardDeal />
-          <Testimonials />
-          <Clients />
-          <CTA />
-          <Footer />
-        </div>
-      </div> */}
     </div>
   )
 }

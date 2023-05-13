@@ -1,45 +1,21 @@
 import React from 'react'
 import styles from '../styles';
-import { Navbar, Login } from "../components";
+import { NavbarWhite, Login } from "../components";
 
 
 const LoginPage = () => {
     return (
-        <div className='bg-primary w-full overflow-hidden h-screen'>
-            {/* <div className={`${styles.paddingX} flex ${styles.flexCenter}`}>
+        <div className='w-full overflow-hidden h-screen'>
+            <div className={`${styles.paddingX} flex ${styles.flexCenter}  shadow-md border-b-2 border-gray-300 border-solid`}>
                 <div className={`w-full`}>
-                    <Navbar />
-                </div>
-            </div> */}
-            {/* <div className={`bg-primary ${styles.flexCenter} `}>
-                <div className={`${styles.boxWidth}`}>
-                    <Hero />
-                </div>
-            </div> */}
-
-
-            <div className={`${styles.paddingX} flex ${styles.flexCenter}`}>
-                <div className={`w-full`}>
-                    <Navbar />
+                    <NavbarWhite />
                 </div>
             </div>
-            <div className={`bg-primary ${styles.flexCenter} `}>
+            <div className={`${styles.flexCenter} `}>
                 <div className={`${styles.boxWidth}`}>
                     <Login />
                 </div>
             </div>
-            {/* <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
-                <div className={`${styles.boxWidth}`}>
-                    <Stats />
-                    <Business />
-                    <Billing />
-                    <CardDeal />
-                    <Testimonials />
-                    <Clients />
-                    <CTA />
-                    <Footer />
-                </div>
-            </div> */}
         </div>
     );
 }
