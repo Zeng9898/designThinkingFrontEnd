@@ -4,11 +4,13 @@ import { userIcon, keyIcon } from '../assets';
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = '/api/login';
 
 const Login = () => {
-    const { auth, setAuth } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
@@ -37,9 +39,11 @@ const Login = () => {
             console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response));
             const accessToken = response?.data?.accessToken;
-            setAuth({ user:user, accessToken:accessToken });
+            setAuth({ user: user, accessToken: accessToken });
             setUser('');
             setPwd('');
+            localStorage.setItem('auth', JSON.stringify({ user, accessToken }));
+            navigate('/activity');
         } catch (err) {
             if (!(err?.response)) {
                 setErrMsg(err?.message);

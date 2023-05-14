@@ -10,7 +10,13 @@ export default {
         dimWhite: "rgba(255, 255, 255, 0.7)",
         dimBlue: "rgba(9, 151, 124, 0.1)",
         myGreenDark: "#004F4E",
-        myGreenNormal: "rgb(121, 171, 138)"
+        myGreenNormal: "rgb(121, 171, 138)",
+        myYellow1:"#6ECEDA",
+        myYellow2:"#83B1C9",
+        myPink1:"#B97687",
+        myPink2:"#EFBAD6",
+        myBlack1:"#323841",
+        myBlack2:"#18181A"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

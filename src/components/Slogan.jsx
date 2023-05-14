@@ -11,7 +11,7 @@ const Slogan = () => {
         </h1>
         <p className={`${styles.paragraph} max-w-[470px] mt-5 text-center text-white text-[20px]`}>
           學習應該是一趟說走就走的旅程<br />
-          透過{" "}<span className="bg-gradient-to-r from-red-300 to-orange-300 text-transparent bg-clip-text font-extrabold text-[21px]">設計思考</span>{" "}發現新的可能
+          透過{" "}<span className="text-orange-200 font-extrabold text-[21px]">設計思考</span>{" "}發現新的可能
         </p>
         <div className="ss:flex hidden my-5">
           <GetStarted />

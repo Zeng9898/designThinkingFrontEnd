@@ -11,12 +11,10 @@ import PrivateRoutes from './utils/PrivateRoutes.jsx'
 
 import { AuthProvider } from './context/AuthProvider.jsx'
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-  Route
+  BrowserRouter as Router, Routes, Route
 } from "react-router-dom";
 
+import { createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -56,5 +54,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
+    {/* <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
+          <Route path="/login" element={<LoginPage />} errorElement={<ErrorPage />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router> */}
   </React.StrictMode>,
 )
