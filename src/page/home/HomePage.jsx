@@ -1,5 +1,6 @@
-import styles from '../styles';
-import { Navbar, Slogan } from "../components";
+import styles from '../../styles';
+import { Navbar } from "../../components";
+import Slogan from "./components/Slogan"
 
 const HomePage = () => {
   return (

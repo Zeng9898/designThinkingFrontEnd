@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from '../styles';
-import { userIcon, keyIcon } from '../assets';
+import styles from '../../../styles';
+import { userIcon, keyIcon } from '../../../assets';
 import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from "../context/AuthProvider";
-import axios from "../api/axios";
+import AuthContext from "../../../context/AuthProvider";
+import axios from "../../../api/axios";
 import { useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = '/api/login';
@@ -57,7 +57,7 @@ const Login = () => {
     return (
         <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}  ${styles.flexCenter} ${styles.marginY} `}>
             <div className={`flex-1 ${styles.flexCenter} flex-col xl:px-0 px-6`}>
-                <form className='max-w-[400px] w-full mx-auto rounded-lg px-14 pb-14 pt-10 border-4 border-gray-300 border-solid'
+                <form className='max-w-[400px] w-full mx-auto rounded-lg px-14 pb-14 pt-10 border-2 border-gray-300 border-solid'
                     onSubmit={handleSubmit}>
                     <h2 className='text-4xl text-black font-bold text-center mb-10'>登入</h2>
                     <div className='flex flex-row text-gray-400 py-2 mt-10'>
@@ -71,8 +71,8 @@ const Login = () => {
                             type="password" placeholder='密碼' onChange={(e) => setPwd(e.target.value)} value={pwd} required autoComplete='false' />
                     </div>
 
-                    <p ref={errRef} className={errMsg !== 'clear' ? 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'
-                        : 'invisible inline-block bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'} aria-live="assertive">{errMsg}</p>
+                    <p ref={errRef} className={errMsg !== 'clear' ? 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-[14px]'
+                        : 'invisible inline-block bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-[14px]'} aria-live="assertive">{errMsg}</p>
 
                     {/* <div className='flex justify-between text-gray-400 py-2'>
                         <p className='flex items-center'><input className='mr-2' type="checkbox" /> Remember Me</p>

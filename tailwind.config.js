@@ -14,9 +14,14 @@ export default {
         myYellow1:"#6ECEDA",
         myYellow2:"#83B1C9",
         myPink1:"#B97687",
-        myPink2:"#EFBAD6",
+        myPink2:"#FEA0AE",
+        myPink3:"#FFB6C1",
         myBlack1:"#323841",
-        myBlack2:"#18181A"
+        myBlack2:"#18181A",
+        myBlue:"#7A96B3",
+        columnBlue:"#BFE0F4",
+        myGray:"#F0F0F0",
+        borderBlue:"#008EE7"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

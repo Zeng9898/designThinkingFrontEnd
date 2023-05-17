@@ -1,4 +1,4 @@
-import styles from "../styles";
+import styles from "../../../styles";
 import { Link } from "react-router-dom";
 
 const GetStarted = () => (

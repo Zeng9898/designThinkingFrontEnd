@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { close, designThinkingLogo, menu } from '../assets';
+import { designThinkingLogo, menu } from '../assets';
 import { navLinks } from '../constants';
 import { Link, useLocation } from "react-router-dom";
 import '../index.css'
@@ -18,7 +18,7 @@ const NavbarWhite = () => {
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
-            className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 cursor-pointer text-[14px] text-black ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
+            className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
           >
             <Link to="/login">{nav.title}</Link>
           </li>

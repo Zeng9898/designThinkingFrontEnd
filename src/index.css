@@ -136,3 +136,20 @@
 .filter-gray {
   filter: invert(47%) sepia(6%) saturate(455%) hue-rotate(201deg) brightness(92%) contrast(88%);
 }
+
+.article-border {
+  border: '2px solid blue';
+}
+
+.column {
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */
+  overflow-y: scroll;
+}
+
+.column::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}

@@ -1,41 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
 
-import HomePage from './page/HomePage.jsx'
-import LoginPage from './page/LoginPage.jsx'
-import ErrorPage from "./page/ErrorPage.jsx";
-import ActivityPage from './page/ActivityPage.jsx'
-import PrivateRoutes from './utils/PrivateRoutes.jsx'
+import HomePage from './page/home/HomePage.jsx';
+import LoginPage from './page/login/LoginPage.jsx';
+import ErrorPage from "./page/error/ErrorPage.jsx";;
+import ActivityPage from './page/activity/ActivityPage.jsx';
+import PrivateRoutes from './utils/PrivateRoutes.jsx';
+import RoutinePage from './page/routine/RoutinePage';
+import RoutinePage2 from './page/routine/RoutinePage2';
+import KanbanPage from './page/kanban/KanbanPage';
 
-import { AuthProvider } from './context/AuthProvider.jsx'
+import { AuthProvider } from './context/AuthProvider.jsx';
 import {
   BrowserRouter as Router, Routes, Route
 } from "react-router-dom";
-
-import { createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <HomePage />,
-//     errorElement: <ErrorPage />
-//   },
-//   {
-//     path: "/login",
-//     element: <LoginPage />,
-//     errorElement: <ErrorPage />
-//   },
-//   {
-//     path: "/activity",
-//     element:
-//       <PrivateRoutes>
-//         <ActivityPage />
-//       </PrivateRoutes>
-//     ,
-//     errorElement: <ErrorPage />
-//   }
-// ]);
+import { createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,25 +27,22 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoutes />}>
         <Route path="/activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
       </Route>
+      <Route path="/routine" element={<RoutinePage />} errorElement={<ErrorPage />} />
+      <Route path="/routine2" element={<RoutinePage2 />} errorElement={<ErrorPage />} />
+      <Route path="/kanban" element={<KanbanPage />} errorElement={<ErrorPage />} />
     </>
   )
 );
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen />
+      </QueryClientProvider>
     </AuthProvider>
-    {/* <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
-          <Route path="/login" element={<LoginPage />} errorElement={<ErrorPage />} />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </Router> */}
   </React.StrictMode>,
 )
