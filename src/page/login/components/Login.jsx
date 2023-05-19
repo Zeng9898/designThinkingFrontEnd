@@ -43,7 +43,7 @@ const Login = () => {
             setUser('');
             setPwd('');
             localStorage.setItem('auth', JSON.stringify({ user, accessToken }));
-            navigate('/activity');
+            navigate('/kanban');
         } catch (err) {
             if (!(err?.response)) {
                 setErrMsg(err?.message);

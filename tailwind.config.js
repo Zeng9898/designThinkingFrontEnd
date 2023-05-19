@@ -21,7 +21,8 @@ export default {
         myBlue:"#7A96B3",
         columnBlue:"#BFE0F4",
         myGray:"#F0F0F0",
-        borderBlue:"#008EE7"
+        borderBlue:"#008EE7",
+        myBlue1:"#D4E7FC"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
