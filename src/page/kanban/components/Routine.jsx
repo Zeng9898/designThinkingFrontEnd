@@ -17,12 +17,12 @@ const Routine = ({ routine, index }) => {
                     </div>
                     <div className="flex justify-between p-[3px] pt-[5px]">
                         <span className={` text-[12px] font-medium`}>種類</span>
-                        <span className={` text-[12px] font-medium`}>{routine.thinkingRoutineType}</span>
+                        <span className={` text-[12px] font-medium`}>{routine.routineType}</span>
                     </div>
                     <div className="flex justify-between items-center p-[3px]">
                         <span className={` text-[12px] font-medium`}>指派人</span>
                         <AvatarGroup
-                            avatars={routine.asignees}
+                            avatars={routine.assignees}
                             initialCharacters={1}
                             max={3}
                             size={25}
@@ -38,10 +38,10 @@ const Routine = ({ routine, index }) => {
                     </div>
                     <div className="flex justify-between p-[3px]">
                         <span className={` text-[12px] font-medium`}>是否需要審核</span>
-                        <span className={` text-[12px] font-medium`}>{routine.needCheck ? '是' : '否'}</span>
+                        <span className={` text-[12px] font-medium`}>{routine.needChecked ? '是' : '否'}</span>
                     </div>
                     <div className="flex justify-end p-[3px]">
-                        <button className="border-[1px] border-solid border-myGray text-borderBlue text-[12px] font-medium rounded-sm p-[3px] mr-[3px] shadow-md hover:bg-myBlue1">進入</button>
+                        <button hidden={routine.belongColumn === '待排程'} className="border-[1px] border-solid border-myGray text-borderBlue text-[12px] font-medium rounded-sm p-[3px] mr-[3px] shadow-md hover:bg-myBlue1">進入</button>
                         <button className="border-[1px] border-solid border-myGray text-borderBlue text-[12px] font-medium rounded-sm p-[3px] shadow-md hover:bg-myBlue1">檢視</button>
                     </div>
                     {provided.placeholder}

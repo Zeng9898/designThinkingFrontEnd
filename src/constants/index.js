@@ -91,3 +91,34 @@ export const thinkingRoutines = [
     stackId: "已完成"
   }
 ]
+
+export const fakeNodes = [
+  {
+    id:1,
+    title:"自我介紹",
+    content:"請大家依照自我介紹節點延伸出的：特質、三個形容詞、最能形容自己的三件事，來做自我介紹",
+    owner:"yihong",
+    to:null
+  },
+  {
+    id:2,
+    title:"特質",
+    content:"請大家以此延伸出自己的特質",
+    owner:"yihong",
+    to:1
+  },
+  {
+    id:3,
+    title:"三件事形容自己",
+    content:"請大家列出形容自己的三件事",
+    owner:"yihong",
+    to:1
+  },
+  {
+    id:4,
+    title:"三個形容詞",
+    content:"請大家列出形容自己的三件事",
+    owner:"yihong",
+    to:1
+  }
+];

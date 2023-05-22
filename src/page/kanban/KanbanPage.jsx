@@ -7,12 +7,15 @@ import SubstageHint from './components/SubstageHint';
 import styles from '../../styles';
 import { theme } from '../../assets';
 import { thinkingRoutines } from '../../constants';
+import axios from '../../api/axios';
 
 import { io } from 'socket.io-client';
 
 const KanbanPage = () => {
     const [socket, setSocket] = useState(null);
 
+    const [designThinkingActivityName, setdesignThinkingActivityName] = useState("");
+    const [subStageHint, setSubStageHint] = useState("");
     const [toBeAssigned, setToBeAssigned] = useState([]);
     const [inProgress, setInProgress] = useState([]);
     const [toBeChecked, setToBeChecked] = useState([]);
@@ -40,44 +43,26 @@ const KanbanPage = () => {
     }, []);
 
     useEffect(() => {
-        setToBeAssigned(thinkingRoutines.filter((routine) => routine.stackId === "待排程"));
-        setInProgress(thinkingRoutines.filter((routine) => routine.stackId === "進行中"));
-        setToBeChecked(thinkingRoutines.filter((routine) => routine.stackId === "待審核"));
-        setCompleted(thinkingRoutines.filter((routine) => routine.stackId === "已完成"));
-    }, []);
-    // 拖曳、刪除、新增、修改（把修改後的推給後端）
-    // const handleDragEnd = (result) => {
-    //     const { destination, source, draggableId } = result;
+        async function fetchDesignThinkingActivity() {
+            await axios.get('/api/designThinkingActivity/5').then((response) => {
+                console.log(response);
+                const designThinkingActivityName = response.data.dtActivityName;
+                const hint = response.data.stages[0].substages[0].subStageHint;
+                const thinkingRoutines = response.data.stages[0].substages[0].thinkingRoutines;
+                console.log(thinkingRoutines);
+                setdesignThinkingActivityName(designThinkingActivityName);
+                setSubStageHint(hint);
+                setToBeAssigned(thinkingRoutines.filter((routine) => routine.belongColumn === "待排程").sort((a, b) => a.price - b.price));
+                setInProgress(thinkingRoutines.filter((routine) => routine.belongColumn === "進行中").sort((a, b) => a.price - b.price));
+                setToBeChecked(thinkingRoutines.filter((routine) => routine.belongColumn === "待審核").sort((a, b) => a.price - b.price));
+                setCompleted(thinkingRoutines.filter((routine) => routine.belongColumn === "已完成").sort((a, b) => a.price - b.price));
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        fetchDesignThinkingActivity();
+    }, [])
 
-    //     if (source.droppableId == destination.droppableId) return;
-
-    //     //REMOVE FROM SOURCE ARRAY
-
-    //     if (source.droppableId == 2) {
-    //         setCompleted(removeItemById(draggableId, completed));
-    //     } else {
-    //         setIncomplete(removeItemById(draggableId, incomplete));
-    //     }
-
-    //     // GET ITEM
-
-    //     const task = findItemById(draggableId, [...incomplete, ...completed]);
-
-    //     //ADD ITEM
-    //     if (destination.droppableId == 2) {
-    //         setCompleted([{ ...task, completed: !task.completed }, ...completed]);
-    //     } else {
-    //         setIncomplete([{ ...task, completed: !task.completed }, ...incomplete]);
-    //     }
-    // };
-
-    // function findItemById(id, array) {
-    //     return array.find((item) => item.id == id);
-    // }
-
-    function removeItemById(id, array) {
-        return array.filter((item) => item.id != id);
-    }
 
     function handleDragEnd(result) {
         if (!result?.destination) return
@@ -93,13 +78,13 @@ const KanbanPage = () => {
         // remove item
         if (source.droppableId === "2") {
             item = inProgressCopy.splice(result.source.index, 1)[0]
-        } else if (source.droppableId == "1") {
+        } else if (source.droppableId === "1") {
             item = toBeAssignedCopy.splice(result.source.index, 1)[0]
         }
         // add item
         if (destination.droppableId === "2") {
             inProgressCopy.splice(result.destination.index, 0, item);
-        } else if (destination.droppableId == "1") {
+        } else if (destination.droppableId === "1") {
             toBeAssignedCopy.splice(result.destination.index, 0, item);
         }
         setInProgress(inProgressCopy);
@@ -119,11 +104,11 @@ const KanbanPage = () => {
             </div>
             <div className={`${styles.paddingX} flex flex-row justify-start items-center py-5`}>
                 <img src={theme} alt="Theme" className='w-[17px] mr-2' />
-                <div className='text-[14px]'> 主題 - 改善水壺材質 </div>
+                <div className='text-[14px]'> 主題 - {designThinkingActivityName} </div>
             </div>
             <div className={`flex flex-row justify-start `}>
                 <div className={`sm:px-16 px-6 flex justify-start flex-row`}>
-                    <SubstageHint />
+                    <SubstageHint subStageHint={subStageHint} />
                 </div>
             </div>
             {/* <div className={`${styles.paddingX} flex ${styles.flexCenter} bg-white shadow-md border-b-2 border-gray-300 border-solid border-opacity-80`}>

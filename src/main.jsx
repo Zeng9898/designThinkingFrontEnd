@@ -7,9 +7,9 @@ import LoginPage from './page/login/LoginPage.jsx';
 import ErrorPage from "./page/error/ErrorPage.jsx";;
 import ActivityPage from './page/activity/ActivityPage.jsx';
 import PrivateRoutes from './utils/PrivateRoutes.jsx';
-import RoutinePage from './page/routine/RoutinePage';
-import RoutinePage2 from './page/routine/RoutinePage2';
+import RedirectRoutes from './utils/RedirectRoutes';
 import KanbanPage from './page/kanban/KanbanPage';
+import IdeaWallPage from './page/ideaWall/IdeaWallPage';
 
 import { AuthProvider } from './context/AuthProvider.jsx';
 import {
@@ -23,13 +23,14 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
-      <Route path="/login" element={<LoginPage />} errorElement={<ErrorPage />} />
+      <Route element={<RedirectRoutes />}>
+        <Route path="/login" element={<LoginPage />} errorElement={<ErrorPage />} />
+      </Route>
       <Route element={<PrivateRoutes />}>
         <Route path="/activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
-      </Route>
-      <Route path="/routine" element={<RoutinePage />} errorElement={<ErrorPage />} />
-      <Route path="/routine2" element={<RoutinePage2 />} errorElement={<ErrorPage />} />
-      <Route path="/kanban" element={<KanbanPage />} errorElement={<ErrorPage />} />
+        <Route path="/kanban" element={<KanbanPage />} errorElement={<ErrorPage />} />
+        <Route path="/ideaWall" element={<IdeaWallPage />} errorElement={<ErrorPage />} />
+      </Route>      
     </>
   )
 );

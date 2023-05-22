@@ -2,11 +2,12 @@ import { Outlet, Navigate } from 'react-router-dom'
 import AuthContext from '../context/AuthProvider'
 import { useContext } from 'react'
 
-const PrivateRoutes = () => {
+const RedirectRoutes = () => {
     const { auth } = useContext(AuthContext);
+    console.log(auth)
     return (
-        (auth && auth.accessToken) ? <Outlet /> : <Navigate to="/login" />
+        (auth && auth.accessToken) ? <Navigate to="/kanban" /> : <Outlet />
     )
 }
 
-export default PrivateRoutes
+export default RedirectRoutes
