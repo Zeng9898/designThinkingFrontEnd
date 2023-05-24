@@ -22,7 +22,7 @@ const Routine = ({ routine, index }) => {
                     <div className="flex justify-between items-center p-[3px]">
                         <span className={` text-[12px] font-medium`}>指派人</span>
                         <AvatarGroup
-                            avatars={routine.assignees.map(assignee => { return assignee.username })}
+                            avatars={routine.assignees.map(assignee => { return assignee.nickname })}
                             initialCharacters={1}
                             max={3}
                             size={25}

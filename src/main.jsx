@@ -23,9 +23,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
-      <Route element={<RedirectRoutes />}>
+      {/* <Route element={<RedirectRoutes />}> */}
         <Route path="login" element={<LoginPage />} errorElement={<ErrorPage />} />
-      </Route>
+      {/* </Route> */}
       <Route element={<PrivateRoutes />}>
         <Route path="activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
         <Route path="kanban/:kanbanId" element={<KanbanPage />} errorElement={<ErrorPage />} />

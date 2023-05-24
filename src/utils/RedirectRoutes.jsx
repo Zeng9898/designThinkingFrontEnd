@@ -6,7 +6,7 @@ const RedirectRoutes = () => {
     const { auth } = useContext(AuthContext);
     console.log(auth)
     return (
-        (auth && auth.accessToken) ? <Navigate to="/kanban" /> : <Outlet />
+        (auth && auth.accessToken) ? <Navigate to="/kanban/1" /> : <Outlet />
     )
 }
 

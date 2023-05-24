@@ -2,10 +2,6 @@ export const navLinks = [
   {
     id: "登入id",
     title: "登入",
-  },
-  {
-    id: "註冊id",
-    title: "註冊",
   }
 ];
 

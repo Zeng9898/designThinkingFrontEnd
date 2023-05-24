@@ -7,10 +7,6 @@ import { visNetworkOptions as option } from '../../utils/visNetworkOptions';
 import svgConvertUrl from '../../utils/svgConvertUrl';
 import SideBar from './components/SideBar';
 // import { useQuery } from 'react-query';
-// import { getIdeaWall, addIdeaWall, updateIdeaWall, deleteIdeaWall } from '../../api/ideaWall';
-// import { socket } from '../../utils/Socket';
-import { fakeNodes } from '../../constants';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from "react-query"
 import AuthContext from '../../context/AuthProvider';
@@ -35,35 +31,32 @@ export default function IdeaWall() {
     // orgnize when fetch
     useEffect(() => {
         console.log(data);
-        // let url;
-        // const edgeForVis = []
-        // const nodesForVis = []
-        // fakeNodes.map(node => {
-        //     url = svgConvertUrl(node.title);
-        //     nodesForVis.push({
-        //         id: node.id,
-        //         image: url,
-        //         shape: "image",
-        //         x: 0,
-        //         y: 0,
-        //     })
-        //     if (node.to !== null) {
-        //         edgeForVis.push({
-        //             from: node.id,
-        //             to: node.to
-        //         })
-        //     }
-        // })
-        // setEdges(edgeForVis);
-        // setNodes(nodesForVis);
+        let url;
+        const edgeForVis = []
+        const nodesForVis = []
+        data?.ideas.map(idea => {
+            url = svgConvertUrl(idea.title);
+            nodesForVis.push({
+                id: idea.id,
+                image: url,
+                shape: "image",
+                x: 0,
+                y: 0,
+            })
+            if (idea.to !== null && idea.to !== undefined) {
+                edgeForVis.push({
+                    from: idea.id,
+                    to: idea.to[0]?.id
+                })
+            }
+        })
+        setEdges(edgeForVis);
+        setNodes(nodesForVis);
     }, [data])
     // const url = svgConvertUrl("node");
     // console.log(url);
-    const [thingkingRoutine, setThinkingRoutine] = useState({});
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
     const [nodeData, setNodeData] = useState({});
     const [buildOnNodeId, setBuildOnId] = useState(null)
     const [socket, setSocket] = useState(null);
@@ -79,37 +72,16 @@ export default function IdeaWall() {
             console.log('Error:', errorMessage);
             // You can set the error message in your component state or trigger any other necessary actions
         });
-        socket.on("nodeUpdated", (msg) => console.log(msg));
+        socket.on("nodeUpdated", (msg) => {
+            console.log('doing refetch!');
+            refetch();
+        });
         setSocket(socket);
         // Clean up the connection when the component unmounts
         return () => {
             socket.disconnect();
         };
     }, []);
-
-    useEffect(() => {
-        let url;
-        const edgeForVis = []
-        const nodesForVis = []
-        fakeNodes.map(node => {
-            url = svgConvertUrl(node.title);
-            nodesForVis.push({
-                id: node.id,
-                image: url,
-                shape: "image",
-                x: 0,
-                y: 0,
-            })
-            if (node.to !== null) {
-                edgeForVis.push({
-                    from: node.id,
-                    to: node.to
-                })
-            }
-        })
-        setEdges(edgeForVis);
-        setNodes(nodesForVis);
-    }, [fakeNodes]);
 
     const [openCreateOption, setOpenCreateOption] = useState(false);
     const [openBuildOption, setOpenBuildOption] = useState(false);
@@ -176,7 +148,8 @@ export default function IdeaWall() {
             // }, 100);
             setUpdateNodeModalOpen(true);
             let nodeId = selectNodes[0];
-            let nodeInfo = fakeNodes.filter(node => node.id === nodeId)
+            let nodeInfo = data?.ideas.filter(idea => idea.id === nodeId)
+
             setSelectNodeInfo(nodeInfo[0])
             console.log(nodeInfo);
         })
@@ -200,8 +173,8 @@ export default function IdeaWall() {
         setNodeData(prevData => ({
             ...prevData,
             [name]: value,
-            owner: auth.user,
-            from_id: buildOnNodeId,
+            owner: auth.nickname,
+            to: buildOnNodeId,
             thinkingRoutineId: thinkingRoutineId
         }));
     }
@@ -249,7 +222,7 @@ export default function IdeaWall() {
     return (
         <div>
             <TopBar />
-            <SideBar thinkingRoutineName={data.thinkingRoutineName} routineType={data.routineType} hint={data.hint} assignees={data.assignees}/>
+            <SideBar thinkingRoutineName={data.thinkingRoutineName} routineType={data.routineType} hint={data.hint} assignees={data.assignees} />
             {
                 //to do ? :
                 <div ref={container} className=' h-screen' onContextMenu={(e) => e.preventDefault()} />
@@ -282,7 +255,7 @@ export default function IdeaWall() {
                 </div>
             </Modal>
             <Modal open={openCreateNode} onClose={() => setOpenCreateNode(false)} opacity={false} position={"justify-center items-center"}>
-                <form onSubmit={handleSubmit}>
+                <form>
                     <div className='flex flex-col p-3'>
                         <h3 className=' font-bold text-base mb-3'>建立節點</h3>
                         <p className=' font-bold text-base mb-3'>標題</p>
@@ -303,10 +276,10 @@ export default function IdeaWall() {
                         />
                     </div>
                     <div className='flex justify-end m-2'>
-                        <button onClick={() => setOpenCreateNode(false)} className=" cursor-pointer shadow-sm mx-auto w-full h-7 mb-2 bg-myBlue3 hover:bg-myBlue4 rounded font-bold text-xs sm:text-sm text-black/60 mr-2" >
+                        <button onClick={(e) => { e.preventDefault(); setOpenCreateNode(false); }} className=" cursor-pointer shadow-sm mx-auto w-full h-7 mb-2 bg-myBlue3 hover:bg-myBlue4 rounded font-bold text-xs sm:text-sm text-black/60 mr-2" >
                             取消
                         </button>
-                        <button type='submit' className="z-51 cursor-pointer shadow-sm bg-myOrange hover:bg-orange-500 mx-auto w-full h-7 mb-2 bg-customgreen rounded font-bold text-xs sm:text-sm text-black/70">
+                        <button onClick={handleSubmit} className="z-51 cursor-pointer shadow-sm bg-myOrange hover:bg-orange-500 mx-auto w-full h-7 mb-2 bg-customgreen rounded font-bold text-xs sm:text-sm text-black/70">
                             儲存
                         </button>
 
@@ -335,27 +308,28 @@ export default function IdeaWall() {
                             value={selectNodeInfo.content}
                             onChange={handleUpdataChange}
                         />
-                        <p className=' font-bold text-base mt-3'>建立者: {selectNodeInfo.owner}</p>
+                        <p className=' font-bold text-base mt-3'>建立者: {selectNodeInfo.owner.username}</p>
                     </div>
                     {
-                        localStorage.getItem("username") === selectNodeInfo.owner ?
+                        // localStorage.getItem("username") === selectNodeInfo.owner ?
+                        //     (
+                        //         <div className='flex flex-row justify-between m-2'>
+                        //             <button onClick={handleDelete} className="w-16 h-7 bg-red-500 rounded font-bold text-xs sm:text-bas text-white mr-2" >
+                        //                 刪除
+                        //             </button>
+                        //             <div className='flex'>
+                        //                 <button onClick={() => setUpdateNodeModalOpen(false)} className="w-16 h-7  bg-customgray rounded font-bold text-xs sm:text-bas text-black/60 mr-2" >
+                        //                     取消
+                        //                 </button>
+                        //                 <button onClick={handleUpdateSubmit} className="w-16 h-7 bg-customgreen rounded font-bold text-xs sm:text-bas text-white">
+                        //                     儲存
+                        //                 </button>
+                        //             </div>
+                        //         </div>
+                        //     ) : 
                             (
-                                <div className='flex flex-row justify-between m-2'>
-                                    <button onClick={handleDelete} className="w-16 h-7 bg-red-500 rounded font-bold text-xs sm:text-bas text-white mr-2" >
-                                        刪除
-                                    </button>
-                                    <div className='flex'>
-                                        <button onClick={() => setUpdateNodeModalOpen(false)} className="w-16 h-7  bg-customgray rounded font-bold text-xs sm:text-bas text-black/60 mr-2" >
-                                            取消
-                                        </button>
-                                        <button onClick={handleUpdateSubmit} className="w-16 h-7 bg-customgreen rounded font-bold text-xs sm:text-bas text-white">
-                                            儲存
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
                                 <div className='flex justify-end m-2'>
-                                    <button onClick={() => setUpdateNodeModalOpen(false)} className="mx-auto w-1/3 h-7 mb-2 bg-customgreen rounded font-bold text-xs sm:text-base text-white mr-2" >
+                                    <button onClick={() => setUpdateNodeModalOpen(false)} className="mx-auto w-1/3 h-7 mb-2 bg-customgreen rounded font-bold text-xs sm:text-base text-black mr-2" >
                                         關閉
                                     </button>
                                 </div>

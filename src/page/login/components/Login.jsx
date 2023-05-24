@@ -4,7 +4,7 @@ import { userIcon, keyIcon } from '../../../assets';
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthProvider";
 import axios from "../../../api/axios";
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = '/api/login';
 
@@ -16,6 +16,8 @@ const Login = () => {
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('clear');
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         userRef.current.focus();
@@ -36,13 +38,19 @@ const Login = () => {
                 }
             );
             console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
+
             const accessToken = response?.data?.accessToken;
-            setAuth({ user: user, accessToken: accessToken });
+            const userId = response?.data?.userId;
+            const nickname = response?.data?.nickname;
+            setAuth({ userId: userId, nickname: nickname, accessToken: accessToken });
             setUser('');
             setPwd('');
-            localStorage.setItem('auth', JSON.stringify({ user, accessToken }));
-            <Navigate to="/kanban/1" />
+            localStorage.setItem('auth', JSON.stringify({ userId: userId, nickname: nickname, accessToken: accessToken, }));
+            // const response = await axios.post(/api/users/designThinkingActivities)
+            const responseDesignThinkingActivity = await axios.get(`/api/users/${userId}/designThinkingActivities`);
+            console.log(responseDesignThinkingActivity.data[0].id);
+            // <Navigate to={`/kanban/${responseDesignThinkingActivity.data[0].id}`} />
+            navigate(`/kanban/${responseDesignThinkingActivity.data[0].id}`)
         } catch (err) {
             if (!(err?.response)) {
                 setErrMsg(err?.message);

@@ -3,6 +3,5 @@ import NavbarWhite from "./NavbarWhite";
 
 export {
   Navbar,
-
   NavbarWhite,
 };

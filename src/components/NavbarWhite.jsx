@@ -27,7 +27,7 @@ const NavbarWhite = () => {
       <ul className="list-none flex justify-end items-center flex-1">
         {(auth && auth.accessToken) ?
           <div className='list-none flex justify-end items-center flex-1'>
-            <li className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black mr-4`}>{auth.user}</li>
+            <li className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black mr-4`}>{auth.nickname}</li>
             <li onClick={logout} className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black mr-4`}>登出</li>
           </div>
           : navLinks.map((nav, index) => (

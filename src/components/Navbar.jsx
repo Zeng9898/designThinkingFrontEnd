@@ -1,14 +1,10 @@
-import { useState } from "react";
-import { designThinkingLogo, menu } from '../assets';
+import { designThinkingLogo } from '../assets';
 import { navLinks } from '../constants';
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../index.css'
 
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false)
-  const currentLocation = useLocation();
-
   return (
     <nav className="w-full flex pt-3 pb-3 justify-between items-center navbar">
       <Link to="/">
