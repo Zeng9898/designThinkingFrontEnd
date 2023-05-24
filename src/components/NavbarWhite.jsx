@@ -1,13 +1,23 @@
 import { useState } from "react";
 import { designThinkingLogo, menu } from '../assets';
 import { navLinks } from '../constants';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 import '../index.css'
 
 
 const NavbarWhite = () => {
+  const { auth, setAuth } = useContext(AuthContext);
   const [toggle, setToggle] = useState(false)
-  const currentLocation = useLocation();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    setAuth("");
+    localStorage.removeItem('auth');
+    console.log('log out');
+    navigate("/")
+  }
 
   return (
     <nav className="w-full flex pt-3 pb-3 justify-between items-center navbar">
@@ -15,14 +25,20 @@ const NavbarWhite = () => {
         <img src={designThinkingLogo} alt="ncu design thinking" className="w-[150px]" />
       </Link>
       <ul className="list-none flex justify-end items-center flex-1">
-        {navLinks.map((nav, index) => (
-          <li
-            key={nav.id}
-            className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
-          >
-            <Link to="/login">{nav.title}</Link>
-          </li>
-        ))}
+        {(auth && auth.accessToken) ?
+          <div className='list-none flex justify-end items-center flex-1'>
+            <li className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black mr-4`}>{auth.user}</li>
+            <li onClick={logout} className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black mr-4`}>登出</li>
+          </div>
+          : navLinks.map((nav, index) => (
+            <li
+              key={nav.id}
+              className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
+            >
+              <Link to="/login">{nav.title}</Link>
+            </li>
+          ))}
+        { }
       </ul>
       {/* <div className="sm:hidden flex flex-1 justify-end items-center">
         <img

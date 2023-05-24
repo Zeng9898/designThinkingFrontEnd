@@ -10,8 +10,10 @@ import { thinkingRoutines } from '../../constants';
 import axios from '../../api/axios';
 
 import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
 
 const KanbanPage = () => {
+    let { kanbanId } = useParams();
     const [socket, setSocket] = useState(null);
 
     const [designThinkingActivityName, setdesignThinkingActivityName] = useState("");
@@ -44,7 +46,7 @@ const KanbanPage = () => {
 
     useEffect(() => {
         async function fetchDesignThinkingActivity() {
-            await axios.get('/api/designThinkingActivity/5').then((response) => {
+            await axios.get(`/api/designThinkingActivity/${kanbanId}`).then((response) => {
                 console.log(response);
                 const designThinkingActivityName = response.data.dtActivityName;
                 const hint = response.data.stages[0].substages[0].subStageHint;

@@ -4,12 +4,11 @@ import { userIcon, keyIcon } from '../../../assets';
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthProvider";
 import axios from "../../../api/axios";
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const LOGIN_URL = '/api/login';
 
 const Login = () => {
-    const navigate = useNavigate();
     const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
@@ -43,7 +42,7 @@ const Login = () => {
             setUser('');
             setPwd('');
             localStorage.setItem('auth', JSON.stringify({ user, accessToken }));
-            navigate('/kanban');
+            <Navigate to="/kanban/1" />
         } catch (err) {
             if (!(err?.response)) {
                 setErrMsg(err?.message);
