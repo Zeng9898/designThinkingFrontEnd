@@ -1,8 +1,14 @@
 import { Draggable } from "react-beautiful-dnd"
 import { v4 as uuidv4 } from 'uuid';
 import AvatarGroup from 'react-avatar-group';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import AuthContext from "../../../context/AuthProvider";
 
 const Routine = ({ routine, index }) => {
+    const navigate = useNavigate();
+    const { auth } = useContext(AuthContext);
+
     return (
         <Draggable draggableId={`${routine.id}`} key={`${routine.id}`} index={index}>
             {(provided, snapshot) => (
@@ -41,7 +47,9 @@ const Routine = ({ routine, index }) => {
                         <span className={` text-[12px] font-medium`}>{routine.needChecked ? '是' : '否'}</span>
                     </div>
                     <div className="flex justify-end p-[3px]">
-                        <button hidden={routine.belongColumn === '待排程'} className="border-[1px] border-solid border-myGray text-borderBlue text-[12px] font-medium rounded-sm p-[3px] mr-[3px] shadow-md hover:bg-myBlue1">進入</button>
+                        <button hidden={routine.belongColumn === '待排程'} onClick={(e) => {
+                            navigate(`ideawall/${routine.id}`);
+                        }} className="border-[1px] border-solid border-myGray text-borderBlue text-[12px] font-medium rounded-sm p-[3px] mr-[3px] shadow-md hover:bg-myBlue1">進入</button>
                         <button className="border-[1px] border-solid border-myGray text-borderBlue text-[12px] font-medium rounded-sm p-[3px] shadow-md hover:bg-myBlue1">檢視</button>
                     </div>
                     {provided.placeholder}

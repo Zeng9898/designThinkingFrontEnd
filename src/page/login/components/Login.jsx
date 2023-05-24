@@ -42,12 +42,13 @@ const Login = () => {
             const accessToken = response?.data?.accessToken;
             const userId = response?.data?.userId;
             const nickname = response?.data?.nickname;
-            setAuth({ userId: userId, nickname: nickname, accessToken: accessToken });
+            const responseDesignThinkingActivity = await axios.get(`/api/users/${userId}/designThinkingActivities`);
+            const kanbanId = responseDesignThinkingActivity.data[0].id;
+            setAuth({ userId: userId, nickname: nickname, kanbanId: kanbanId, accessToken: accessToken });
             setUser('');
             setPwd('');
-            localStorage.setItem('auth', JSON.stringify({ userId: userId, nickname: nickname, accessToken: accessToken, }));
+            localStorage.setItem('auth', JSON.stringify({ userId: userId, nickname: nickname, kanbanId: kanbanId, accessToken: accessToken, }));
             // const response = await axios.post(/api/users/designThinkingActivities)
-            const responseDesignThinkingActivity = await axios.get(`/api/users/${userId}/designThinkingActivities`);
             console.log(responseDesignThinkingActivity.data[0].id);
             // <Navigate to={`/kanban/${responseDesignThinkingActivity.data[0].id}`} />
             navigate(`/kanban/${responseDesignThinkingActivity.data[0].id}`)

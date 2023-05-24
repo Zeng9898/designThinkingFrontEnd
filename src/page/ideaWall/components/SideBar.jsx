@@ -35,7 +35,7 @@ const SideBar = ({ thinkingRoutineName, routineType, hint, assignees }) => {
                 <div className='mb-[15px]'>
                     <h2 className='text-[16px] font-semibold mb-[10px]'>指派對象</h2>
                     <AvatarGroup
-                            avatars={assignees.map(assignee => { return assignee.username })}
+                            avatars={assignees.map(assignee => { return assignee.nickname })}
                             initialCharacters={1}
                             max={3}
                             size={25}
