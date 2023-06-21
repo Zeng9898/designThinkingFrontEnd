@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const thinkingRoutineApi = axios.create({
-    baseURL: "http://localhost:3000/api/thinkingRoutine/",
+    baseURL: "http://140.115.126.102:3000/api/thinkingRoutine/",
     headers:{
         "Content-Type":" application/json"
     },
