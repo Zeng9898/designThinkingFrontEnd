@@ -7,7 +7,7 @@ import Login from './components/Login';
 const LoginPage = () => {
     return (
         <div className='w-full overflow-hiddle h-screen'>
-            <div className={`${styles.paddingX} flex ${styles.flexCenter}  shadow-md border-b-2 border-gray-300 border-solid`}>
+            <div className={`${styles.paddingX} ${styles.flexCenter}  shadow-md border-b-2 border-gray-300 border-solid`}>
                 <div className={`w-full`}>
                     <NavbarWhite />
                 </div>

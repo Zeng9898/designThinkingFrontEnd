@@ -4,6 +4,7 @@ import './index.css';
 
 import HomePage from './page/home/HomePage.jsx';
 import LoginPage from './page/login/LoginPage.jsx';
+import RegisterPage from './page/register/RegisterPage';
 import ErrorPage from "./page/error/ErrorPage.jsx";;
 import ActivityPage from './page/activity/ActivityPage.jsx';
 import PrivateRoutes from './utils/PrivateRoutes.jsx';
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route element={<RedirectRoutes />}>
         <Route path="login" element={<LoginPage />} errorElement={<ErrorPage />} />
       </Route>
+      <Route path="register" element={<RegisterPage />} errorElement={<ErrorPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
         <Route path="kanban/:kanbanId" element={<KanbanPage />} errorElement={<ErrorPage />} />

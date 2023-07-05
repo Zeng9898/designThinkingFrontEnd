@@ -65,7 +65,7 @@ export default function IdeaWall() {
 
 
     useEffect(() => {
-        const socket = io('http://140.115.126.102:3000');
+        const socket = io('http://10.242.104.221:3000');
         socket.on('connect', () => {
             console.log('Socket connected', socket.id);
         });

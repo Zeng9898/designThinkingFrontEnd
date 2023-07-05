@@ -5,6 +5,9 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthProvider";
 import axios from "../../../api/axios";
 import { useNavigate } from 'react-router-dom';
+import { FaUser } from 'react-icons/fa';
+import { MdKey } from 'react-icons/md';
+
 
 const LOGIN_URL = '/api/login';
 
@@ -63,18 +66,20 @@ const Login = () => {
     }
 
     return (
-        <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}  ${styles.flexCenter} ${styles.marginY} `}>
+        <section id="home" className={`flex flex-row ${styles.paddingY}  ${styles.flexCenter} ${styles.marginY} `}>
             <div className={`flex-1 ${styles.flexCenter} flex-col xl:px-0 px-6`}>
                 <form className='max-w-[400px] w-full mx-auto rounded-lg px-14 pb-14 pt-10 border-2 border-gray-300 border-solid'
                     onSubmit={handleSubmit}>
                     <h2 className='text-4xl text-black font-bold text-center mb-10'>登入</h2>
                     <div className='flex flex-row text-gray-400 py-2 mt-10'>
-                        <img src={userIcon} alt="user" className='w-[17px] mr-2 object-contain' draggable='false' />
+                        <FaUser className='text-[17px] self-center mr-2' />
+                        {/* <img src={userIcon} alt="user" className='w-[17px] mr-2 object-contain' draggable='false' /> */}
                         <input className='w-full border-b-2 border-gray-200 focus:outline-none mt-2 p-1 text-black'
                             type="text" placeholder='帳號' ref={userRef} onChange={(e) => setUser(e.target.value)} value={user} required />
                     </div>
-                    <div className='flex flex-row text-gray-400 mb-16'>
-                        <img src={keyIcon} alt="user" className='w-[17px] mr-2 object-contain' draggable='false' />
+                    <div className='flex flex-row text-gray-400 pb-2'>
+                        <MdKey className='text-[17px] self-center mr-2' />
+                        {/* <img src={keyIcon} alt="user" className='w-[17px] mr-2 object-contain' draggable='false' /> */}
                         <input className='w-full border-b-2 border-gray-200 focus:outline-none mt-2 p-1 text-black'
                             type="password" placeholder='密碼' onChange={(e) => setPwd(e.target.value)} value={pwd} required autoComplete='false' />
                     </div>
