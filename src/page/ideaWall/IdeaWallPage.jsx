@@ -30,28 +30,30 @@ export default function IdeaWall() {
 
     // orgnize when fetch
     useEffect(() => {
-        console.log(data);
-        let url;
-        const edgeForVis = []
-        const nodesForVis = []
-        data?.ideas.map(idea => {
-            url = svgConvertUrl(idea.title);
-            nodesForVis.push({
-                id: idea.id,
-                image: url,
-                shape: "image",
-                x: 0,
-                y: 0,
-            })
-            if (idea.to !== null && idea.to !== undefined) {
-                edgeForVis.push({
-                    from: idea.id,
-                    to: idea.to[0]?.id
+        if(data){
+            console.log(data);
+            let url;
+            const edgeForVis = []
+            const nodesForVis = []
+            data.ideas.map(idea => {
+                url = svgConvertUrl(idea.title);
+                nodesForVis.push({
+                    id: idea.id,
+                    image: url,
+                    shape: "image",
+                    x: 0,
+                    y: 0,
                 })
-            }
-        })
-        setEdges(edgeForVis);
-        setNodes(nodesForVis);
+                if (idea.to !== null && idea.to !== undefined) {
+                    edgeForVis.push({
+                        from: idea.id,
+                        to: idea.to[0]?.id
+                    })
+                }
+            })
+            setEdges(edgeForVis);
+            setNodes(nodesForVis);
+        }
     }, [data])
     // const url = svgConvertUrl("node");
     // console.log(url);
@@ -63,22 +65,26 @@ export default function IdeaWall() {
 
 
     useEffect(() => {
-        const socket = io('http://localhost:3000');
+        const socket = io('http://10.242.104.221:3000');
         socket.on('connect', () => {
             console.log('Socket connected', socket.id);
         });
+
+        socket.emit('join-room', thinkingRoutineId);
+
         socket.on('errorEvent', (errorMessage) => {
             // Handle the error message
             console.log('Error:', errorMessage);
             // You can set the error message in your component state or trigger any other necessary actions
         });
         socket.on("nodeUpdated", (msg) => {
-            console.log('doing refetch!');
+            console.log(msg);
             refetch();
         });
         setSocket(socket);
         // Clean up the connection when the component unmounts
         return () => {
+            socket.emit('leave-room', thinkingRoutineId);
             socket.disconnect();
         };
     }, []);
@@ -183,7 +189,7 @@ export default function IdeaWall() {
         e.preventDefault()
         console.log(nodeData);
         if (socket != null) {
-            socket.emit('createNode', nodeData);
+            socket.emit('createNode', thinkingRoutineId, nodeData);
         }
         setOpenCreateNode(false);
         // e.preventDefault()
@@ -217,6 +223,8 @@ export default function IdeaWall() {
 
     if (isLoading) {
         return <div>Loading...</div>;
+    } else if (isError){
+        return <p>{error.message}</p>;
     }
 
     return (
@@ -225,7 +233,7 @@ export default function IdeaWall() {
             <SideBar thinkingRoutineName={data.thinkingRoutineName} routineType={data.routineType} hint={data.hint} assignees={data.assignees} />
             {
                 //to do ? :
-                <div ref={container} className=' h-screen' onContextMenu={(e) => e.preventDefault()} />
+                <div ref={container} className='h-[calc(100vh-66px)]' onContextMenu={(e) => e.preventDefault()} />
             }
             <Modal open={openCreateOption} onClose={() => setOpenCreateOption(false)} opacity={false} modalCoordinate={canvasPosition} custom={"w-30 h-15"}>
                 <div>
@@ -276,10 +284,10 @@ export default function IdeaWall() {
                         />
                     </div>
                     <div className='flex justify-end m-2'>
-                        <button onClick={(e) => { e.preventDefault(); setOpenCreateNode(false); }} className=" cursor-pointer shadow-sm mx-auto w-full h-7 mb-2 bg-myBlue3 hover:bg-myBlue4 rounded font-bold text-xs sm:text-sm text-black/60 mr-2" >
+                        <button onClick={(e) => { e.preventDefault(); setOpenCreateNode(false); }} className="cursor-pointer shadow-sm mx-auto w-full h-7 mb-2 bg-myBlue3 hover:bg-myBlue4 rounded font-extrabold text-xs sm:text-sm text-black/60 mr-2" >
                             取消
                         </button>
-                        <button onClick={handleSubmit} className="z-51 cursor-pointer shadow-sm bg-myOrange hover:bg-orange-500 mx-auto w-full h-7 mb-2 bg-customgreen rounded font-bold text-xs sm:text-sm text-black/70">
+                        <button onClick={handleSubmit} className="z-51 cursor-pointer shadow-sm bg-myOrange hover:bg-orange-500 mx-auto w-full h-7 mb-2 bg-customgreen rounded font-extrabold text-xs sm:text-sm text-black/70">
                             儲存
                         </button>
 
@@ -298,7 +306,7 @@ export default function IdeaWall() {
                             placeholder="標題"
                             name='title'
                             value={selectNodeInfo.title}
-                            onChange={handleUpdataChange}
+                            readOnly
                         />
                         <p className=' font-bold text-base mb-3'>內容</p>
                         <textarea className=" rounded outline-none ring-2 ring-customgreen w-full p-1"
@@ -306,9 +314,9 @@ export default function IdeaWall() {
                             placeholder="內容"
                             name='content'
                             value={selectNodeInfo.content}
-                            onChange={handleUpdataChange}
+                            readOnly
                         />
-                        <p className=' font-bold text-base mt-3'>建立者: {selectNodeInfo.owner.username}</p>
+                        <p className=' font-bold text-base mt-3'>建立者: {selectNodeInfo.owner.nickname}</p>
                     </div>
                     {
                         // localStorage.getItem("username") === selectNodeInfo.owner ?

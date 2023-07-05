@@ -1,6 +1,6 @@
 import { DragDropContext } from 'react-beautiful-dnd'
 import { useState, useEffect } from 'react';
-import Column from './components/column';
+import Column from './components/Column';
 import NormalColumn from './components/NormalColumn';
 import { NavbarWhite } from '../../components';
 import SubstageHint from './components/SubstageHint';
@@ -8,14 +8,15 @@ import styles from '../../styles';
 import { theme } from '../../assets';
 import { thinkingRoutines } from '../../constants';
 import axios from '../../api/axios';
-
+import { useQuery, useMutation, useQueryClient } from "react-query"
+import { getKanban } from '../../api/kanban';
 // import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
 const KanbanPage = () => {
     let { kanbanId } = useParams();
     // const [socket, setSocket] = useState(null);
-
+    const queryClient = useQueryClient()
     const [designThinkingActivityName, setdesignThinkingActivityName] = useState("");
     const [subStageHint, setSubStageHint] = useState("");
     const [toBeAssigned, setToBeAssigned] = useState([]);
@@ -45,27 +46,57 @@ const KanbanPage = () => {
     //     };
     // }, []);
 
-    useEffect(() => {
-        async function fetchDesignThinkingActivity() {
-            await axios.get(`/api/designThinkingActivity/${kanbanId}`).then((response) => {
-                console.log(response);
-                const designThinkingActivityName = response.data.dtActivityName;
-                const hint = response.data.stages[0].substages[0].subStageHint;
-                const thinkingRoutines = response.data.stages[0].substages[0].thinkingRoutines;
-                console.log(thinkingRoutines);
-                setSubstageName(response.data.stages[0].substages[0].subStageName);
-                setdesignThinkingActivityName(designThinkingActivityName);
-                setSubStageHint(hint);
-                setToBeAssigned(thinkingRoutines.filter((routine) => routine.belongColumn === "待排程").sort((a, b) => a.price - b.price));
-                setInProgress(thinkingRoutines.filter((routine) => routine.belongColumn === "進行中").sort((a, b) => a.index - b.index));
-                setToBeChecked(thinkingRoutines.filter((routine) => routine.belongColumn === "待審核").sort((a, b) => a.price - b.price));
-                setCompleted(thinkingRoutines.filter((routine) => routine.belongColumn === "已完成").sort((a, b) => a.price - b.price));
-            }).catch(err => {
-                console.log(err);
-            })
+    // useEffect(() => {
+    //     async function fetchDesignThinkingActivity() {
+    //         await axios.get(`/api/designThinkingActivity/${kanbanId}`).then((response) => {
+    //             console.log(response);
+    //             const designThinkingActivityName = response.data.dtActivityName;
+    //             const hint = response.data.stages[0].substages[0].subStageHint;
+    //             const thinkingRoutines = response.data.stages[0].substages[0].thinkingRoutines;
+    //             console.log(thinkingRoutines);
+    //             setSubstageName(response.data.stages[0].substages[0].subStageName);
+    //             setdesignThinkingActivityName(designThinkingActivityName);
+    //             setSubStageHint(hint);
+    //             setToBeAssigned(thinkingRoutines.filter((routine) => routine.belongColumn === "待排程").sort((a, b) => a.price - b.price));
+    //             setInProgress(thinkingRoutines.filter((routine) => routine.belongColumn === "進行中").sort((a, b) => a.index - b.index));
+    //             setToBeChecked(thinkingRoutines.filter((routine) => routine.belongColumn === "待審核").sort((a, b) => a.price - b.price));
+    //             setCompleted(thinkingRoutines.filter((routine) => routine.belongColumn === "已完成").sort((a, b) => a.price - b.price));
+    //         }).catch(err => {
+    //             console.log(err);
+    //         })
+    //     }
+    //     fetchDesignThinkingActivity();
+    // }, [])
+
+    const {
+        isLoading,
+        isError,
+        error,
+        data,
+        refetch
+    } = useQuery('kanban', () => getKanban(kanbanId));
+        
+    useEffect(()=>{
+            if(data){
+            const designThinkingActivityName = data.dtActivityName;
+            const hint = data.stages[0].substages[0].subStageHint;
+            const thinkingRoutines = data.stages[0].substages[0].thinkingRoutines;
+            console.log(data);
+            setSubstageName(data.stages[0].substages[0].subStageName);
+            setdesignThinkingActivityName(designThinkingActivityName);
+            setSubStageHint(hint);
+            setToBeAssigned(thinkingRoutines.filter((routine) => routine.belongColumn === "待排程").sort((a, b) => a.price - b.price));
+            setInProgress(thinkingRoutines.filter((routine) => routine.belongColumn === "進行中").sort((a, b) => a.index - b.index));
+            setToBeChecked(thinkingRoutines.filter((routine) => routine.belongColumn === "待審核").sort((a, b) => a.price - b.price));
+            setCompleted(thinkingRoutines.filter((routine) => routine.belongColumn === "已完成").sort((a, b) => a.price - b.price));
         }
-        fetchDesignThinkingActivity();
-    }, [])
+    },[data]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    } else if (isError){
+        return <p>{error.message}</p>;
+    }
 
 
     // function handleDragEnd(result) {
@@ -108,7 +139,7 @@ const KanbanPage = () => {
             </div>
             <div className={`${styles.paddingX} flex flex-row justify-start items-center py-5`}>
                 <img src={theme} alt="Theme" className='w-[17px] mr-2' />
-                <div className='text-[14px]'> 主題 - {designThinkingActivityName} </div>
+                <div className='text-[14px]'> 主題 - {designThinkingActivityName} - </div>
             </div>
             <div className={`flex flex-row justify-start `}>
                 <div className={`sm:px-16 px-6 flex justify-start flex-row`}>

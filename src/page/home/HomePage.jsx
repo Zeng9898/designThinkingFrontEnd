@@ -4,7 +4,7 @@ import Slogan from "./components/Slogan"
 
 const HomePage = () => {  
   return (
-    <div className='bg-gradient-to-r from-blue-400 to-blue-500 overflow-hidden h-screen'>
+    <div className='bg-gradient-to-r from-blue-400 to-blue-600 overflow-hidden h-screen'>
       <div className={`${styles.paddingX} flex ${styles.flexCenter}`}>
         <div className={`w-full`}>
           <Navbar />

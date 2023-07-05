@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
 import AuthContext from "../../../context/AuthProvider";
 import styles from "../../../styles";
-
+import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
   const [toggle, setToggle] = useState(false)
   const { auth, setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const logout = () => {
     setAuth("");
