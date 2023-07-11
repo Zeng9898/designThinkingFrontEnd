@@ -181,7 +181,7 @@ const Register = () => {
                         <p className='flex items-center'><input className='mr-2' type="checkbox" /> Remember Me</p>
                         <p>Forgot Password</p>
                     </div> */}
-                    <button className='w-full my-5 mt-10 py-2 bg-myGreenNormal  hover:bg-myGreenDark text-white rounded-lg' disabled={!validNickname || !validPwd || !validMatch || !validUser ? true : false}>登入</button>
+                    <button className='w-full my-5 mt-10 py-2 bg-myGreenNormal  hover:bg-myGreenDark text-white rounded-lg' disabled={!validNickname || !validPwd || !validMatch || !validUser ? true : false}>註冊</button>
 
                 </form>
             </div >

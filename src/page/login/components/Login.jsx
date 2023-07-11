@@ -72,13 +72,13 @@ const Login = () => {
                     onSubmit={handleSubmit}>
                     <h2 className='text-4xl text-black font-bold text-center mb-10'>登入</h2>
                     <div className='flex flex-row text-gray-400 py-2 mt-10'>
-                        <FaUser className='text-[17px] self-center mr-2' />
+                        <FaUser className='text-[17px] self-center mr-2 text-gray-500' />
                         {/* <img src={userIcon} alt="user" className='w-[17px] mr-2 object-contain' draggable='false' /> */}
                         <input className='w-full border-b-2 border-gray-200 focus:outline-none mt-2 p-1 text-black'
                             type="text" placeholder='帳號' ref={userRef} onChange={(e) => setUser(e.target.value)} value={user} required />
                     </div>
                     <div className='flex flex-row text-gray-400 pb-2'>
-                        <MdKey className='text-[17px] self-center mr-2' />
+                        <MdKey className='text-[17px] self-center mr-2 text-gray-500' />
                         {/* <img src={keyIcon} alt="user" className='w-[17px] mr-2 object-contain' draggable='false' /> */}
                         <input className='w-full border-b-2 border-gray-200 focus:outline-none mt-2 p-1 text-black'
                             type="password" placeholder='密碼' onChange={(e) => setPwd(e.target.value)} value={pwd} required autoComplete='false' />
@@ -92,7 +92,6 @@ const Login = () => {
                         <p>Forgot Password</p>
                     </div> */}
                     <button className='w-full my-5 mt-10 py-2 bg-myGreenNormal  hover:bg-myGreenDark text-white rounded-lg'>登入</button>
-
                 </form>
             </div>
         </section>

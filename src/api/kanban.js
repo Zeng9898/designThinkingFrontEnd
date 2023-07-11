@@ -3,11 +3,12 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const kanbanApi = axios.create({
-    baseURL: "http://10.242.104.221:3000/api/designThinkingActivity",
+    baseURL: "http://127.0.0.1:3000/api/designThinkingActivity",
     headers:{
         "Content-Type":" application/json"
     },
 })
+
 
 
 export const getKanban = async (designThinkingActivityId) => {

@@ -131,7 +131,7 @@ const KanbanPage = () => {
     // }
 
     return (
-        <div className='w-full bg-myGray  h-full'>
+        <div className='w-full bg-myGray  h-screen'>
             <div className={`${styles.paddingX} flex ${styles.flexCenter} bg-white shadow-md border-b-2 border-gray-300 border-solid border-opacity-80`}>
                 <div className={`w-full`}>
                     <NavbarWhite />

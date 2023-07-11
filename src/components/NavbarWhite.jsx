@@ -35,7 +35,7 @@ const NavbarWhite = () => {
               key={nav.id}
               className={`font-poppins font-medium hover:bg-stone-500	 rounded-md p-1 mt-1 cursor-pointer text-[14px] text-black ${index === navLinks.length - 1 ? "mr-0" : "mr-4"}`}
             >
-              <Link to="/login">{nav.title}</Link>
+              <Link to={`/${nav.url}`}>{nav.title}</Link>
             </li>
           ))}
         { }

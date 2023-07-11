@@ -6,6 +6,7 @@ export default function Modal({ open, onClose, opacity, position, modalCoordinat
     useEffect(() => {
         setCoordinate(modalCoordinate);
     }, [modalCoordinate])
+    
     return (
         <>
             {

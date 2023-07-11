@@ -26,8 +26,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
       <Route element={<RedirectRoutes />}>
         <Route path="login" element={<LoginPage />} errorElement={<ErrorPage />} />
+        <Route path="register" element={<RegisterPage />} errorElement={<ErrorPage />} />
       </Route>
-      <Route path="register" element={<RegisterPage />} errorElement={<ErrorPage />} />
       <Route element={<PrivateRoutes />}>
         <Route path="activity" element={<ActivityPage />} errorElement={<ErrorPage />} />
         <Route path="kanban/:kanbanId" element={<KanbanPage />} errorElement={<ErrorPage />} />

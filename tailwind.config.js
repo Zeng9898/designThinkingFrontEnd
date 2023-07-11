@@ -27,7 +27,12 @@ export default {
         myGold: "#FFED7D",
         myBlue3:"#A0CCC9",
         myBlue4:"#51908A",
-        myOrange:"#F29328"
+        myOrange:"#F29328",
+        activityPink:"#FFEAEC",
+        activityGreen:"#004F4E",
+        invitationPink:"#FFD7DC",
+        activityGreen:"#004F4E",
+        activityGreen2:"#79AB8A",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

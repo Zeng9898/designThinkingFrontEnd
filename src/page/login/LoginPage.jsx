@@ -12,7 +12,7 @@ const LoginPage = () => {
                     <NavbarWhite />
                 </div>
             </div>
-            <div className={`${styles.flexCenter} `}>
+            <div className={`${styles.flexCenter}`}>
                 <div className={`${styles.boxWidth}`}>
                     <Login />
                 </div>
